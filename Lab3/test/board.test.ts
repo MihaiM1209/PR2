@@ -4,8 +4,6 @@ import { Board } from '../src/board.js';
 /**
  * Tests for the Board abstract data type.
  */
-
-
 describe('Board', function() {
     // Testing strategy
     //
@@ -114,7 +112,7 @@ describe('Board', function() {
             assert(lines[0] === '4x4', 'Should show correct dimensions');
             
             const cardLines = lines.slice(1);
-            assert(cardLines.every((line: string) => line === 'down'), 
+            assert(cardLines.every(line => line === 'down'), 
                 'All cards should be face down initially');
         });
 
@@ -126,7 +124,7 @@ describe('Board', function() {
             const lines = view.split('\n');
             
             // Should find exactly one face-up card controlled by player1
-            const myCards = lines.filter((line: string) => line.startsWith('my'));
+            const myCards = lines.filter(line => line.startsWith('my'));
             assert.strictEqual(myCards.length, 1, 'Should see one card controlled by me');
             const myCard = myCards[0];
             assert(myCard, 'Should have a card controlled by me');
@@ -142,7 +140,7 @@ describe('Board', function() {
             const view = board.look('player1');
             const lines = view.split('\n');
             
-            const upCards = lines.filter((line: string) => line.startsWith('up'));
+            const upCards = lines.filter(line => line.startsWith('up'));
             assert.strictEqual(upCards.length, 1, 'Should see one card face up');
             const upCard = upCards[0];
             assert(upCard, 'Should have a face-up card');
@@ -244,7 +242,7 @@ describe('Board', function() {
                         if (result.includes(firstCardValue)) {
                             // Found matching card, verify both are controlled
                             const resultLines = result.split('\n').slice(1);
-                            const myCards = resultLines.filter((line: string) => line.startsWith('my'));
+                            const myCards = resultLines.filter(line => line.startsWith('my'));
                             assert.strictEqual(myCards.length, 2, 
                                 'Both cards should be controlled after match');
                             return;
@@ -271,7 +269,7 @@ describe('Board', function() {
             // Both cards should be face up but not controlled
             const result = board.look('player1');
             const lines = result.split('\n').slice(1);
-            const upCards = lines.filter((line: string) => line.startsWith('up'));
+            const upCards = lines.filter(line => line.startsWith('up'));
             assert.strictEqual(upCards.length, 2, 
                 'Non-matching cards should be face up but not controlled');
         });
@@ -339,7 +337,7 @@ describe('Board', function() {
             
             // If the original card was a unicorn, it should be replaced
             if (originalCard === '🦄') {
-                const cardLine = resultLines.find((line: string) => line.includes('my'));
+                const cardLine = resultLines.find(line => line.includes('my'));
                 assert(cardLine?.includes(replacementEmoji), 
                     'Face-up unicorn should be replaced with star');
             }
@@ -386,7 +384,7 @@ describe('Board', function() {
             await board.flip('player1', 0, 1);
             const finalView = board.look('player1');
             const mappedLines = finalView.split('\n').slice(1); // Skip dimensions line
-            const mappedCount = mappedLines.filter((line: string) => line.includes('MAPPED')).length;
+            const mappedCount = mappedLines.filter(line => line.includes('MAPPED')).length;
             assert.strictEqual(mappedCount, 2, 'Both cards in pair should be mapped');
         });
 
@@ -396,8 +394,8 @@ describe('Board', function() {
             
             // Start multiple map operations simultaneously
             const promises = [
-                board.map('player1', async (card: string) => card + '_1'),
-                board.map('player2', async (card: string) => card + '_2')
+                board.map('player1', async (card) => card + '_1'),
+                board.map('player2', async (card) => card + '_2')
             ];
             
             await Promise.all(promises);
@@ -427,7 +425,7 @@ describe('Board', function() {
             await board.flip('player1', 0, 0);
             
             // Perform mapping
-            await board.map('player1', async (card: string) => card + '_mapped');
+            await board.map('player1', async (card) => card + '_mapped');
             
             const result = board.look('player1');
             assert(result.includes('_mapped'), 'Face-up cards should be mapped');
@@ -490,7 +488,7 @@ describe('Board', function() {
             
             // Change card values
             setTimeout(async () => {
-                await board.map('player1', async (card: string) => card + '_changed');
+                await board.map('player1', async (card) => card + '_changed');
             }, 100);
             
             const result = await watchPromise;

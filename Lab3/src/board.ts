@@ -310,20 +310,20 @@ export class Board {
     public look(playerId: string): string {
         const lines: string[] = [`${this.height}x${this.width}`];
         for (const row of this.board) {
-        for (const cell of row) {
-            let status = "down";
-            let text = "";
-            if (cell.card.length === 0) status = "none";
-            // else if (!cell.faceUp) status = "down"; // Redundant assignment removed
-            else if (cell.controller === playerId && cell.faceUp) {
-                status = "my";
-            text = cell.card;
-            } else {
-            status = "up";
-            text = cell.card;
+            for (const cell of row) {
+                let status = "down";
+                let text = "";
+                if (cell.card.length === 0) {
+                    status = "none";
+                } else if (cell.controller === playerId && cell.faceUp) {
+                    status = "my";
+                    text = cell.card;
+                } else if (cell.faceUp) {
+                    status = "up";
+                    text = cell.card;
+                } // else remains 'down' with empty text
+                lines.push(`${status} ${text}`.trim());
             }
-            lines.push(`${status} ${text}`.trim());
-        }
         }
         const out = lines.join("\n");
         this.checkRepFunctions();

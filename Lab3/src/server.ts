@@ -30,10 +30,10 @@ async function main(): Promise<void> {
     const [portString, filename] 
         = process.argv.slice(2); // skip the first two arguments 
                                  // (argv[0] is node executable file, argv[1] is this script)
-    if (portString === undefined) { throw new TypeError('missing PORT'); }
-    const port = Number.parseInt(portString);
-    if (Number.isNaN(port) || port < 0) { throw new TypeError('invalid PORT'); }
-    if (filename === undefined) { throw new TypeError('missing FILENAME'); }
+    if (portString === undefined) { throw new Error('missing PORT'); }
+    const port = parseInt(portString);
+    if (isNaN(port) || port < 0) { throw new Error('invalid PORT'); }
+    if (filename === undefined) { throw new Error('missing FILENAME'); }
     
     const board = await Board.parseFromFile(filename);
     const server = new WebServer(board, port);
@@ -60,7 +60,7 @@ class WebServer {
         private readonly requestedPort: number
     ) {
         this.app = express();
-        this.app.use((request: express.Request, response: express.Response, next: express.NextFunction) => {
+        this.app.use((request, response, next) => {
             // allow requests from web pages hosted anywhere
             response.set('Access-Control-Allow-Origin', '*');
             next();
@@ -72,7 +72,7 @@ class WebServer {
          * 
          * Response is the board state from playerId's perspective, as described in the ps4 handout.
          */
-        this.app.get('/look/:playerId', async(request: express.Request, response: express.Response) => {
+        this.app.get('/look/:playerId', async(request, response) => {
             const { playerId } = request.params;
             assert(playerId);
             const boardState = await look(this.board, playerId);
@@ -90,14 +90,14 @@ class WebServer {
          * Response is the state of the board after the flip from the perspective of playerID,
          * as described in the ps4 handout.
          */
-        this.app.get('/flip/:playerId/:location', async(request: express.Request, response: express.Response) => {
+        this.app.get('/flip/:playerId/:location', async(request, response) => {
             const { playerId, location } = request.params;
             assert(playerId);
             assert(location);
 
-            const [ row, column ] = location.split(',').map((s: string) => Number.parseInt(s));
-            assert(row !== undefined && !Number.isNaN(row));
-            assert(column !== undefined && !Number.isNaN(column));
+            const [ row, column ] = location.split(',').map( s => parseInt(s) );
+            assert(row !== undefined && !isNaN(row));
+            assert(column !== undefined && !isNaN(column));
 
             try {
                 const boardState = await flip(this.board, playerId, row, column);
@@ -123,7 +123,7 @@ class WebServer {
          * Response is the state of the board after the replacement from the the perspective of playerID,
          * as described in the ps4 handout.
          */
-        this.app.get('/replace/:playerId/:fromCard/:toCard', async(request: express.Request, response: express.Response) => {
+        this.app.get('/replace/:playerId/:fromCard/:toCard', async(request, response) => {
             const { playerId, fromCard, toCard } = request.params;
             assert(playerId);
             assert(fromCard);
@@ -146,7 +146,7 @@ class WebServer {
          * Response is the new state of the board from the perspective of playerID,
          * as described in the ps4 handout.
          */
-        this.app.get('/watch/:playerId', async(request: express.Request, response: express.Response) => {
+        this.app.get('/watch/:playerId', async(request, response) => {
             const { playerId } = request.params;
             assert(playerId);
 
@@ -173,14 +173,10 @@ class WebServer {
     public start(): Promise<void> {
         const { promise, resolve } = Promise.withResolvers<void>();
         this.server = this.app.listen(this.requestedPort);
-        if (this.server) {
-            this.server.on('listening', () => {
-                console.log(`server now listening at http://localhost:${this.port}`);
-                resolve();
-            });
-        } else {
-            throw new TypeError('Server failed to start');
-        }
+        this.server.on('listening', () => {
+            console.log(`server now listening at http://localhost:${this.port}`);
+            resolve();
+        });
         return promise;
     }
 
@@ -193,7 +189,7 @@ class WebServer {
     public get port(): number {
         const address = this.server?.address() ?? 'not connected';
         if (typeof(address) === 'string') {
-            throw new TypeError('server is not listening at a port');
+            throw new Error('server is not listening at a port');
         }
         return address.port;
     }
