@@ -135,10 +135,10 @@ export class Board {
             throw new Error('invalid board dimensions format');
         }
 
-        const height = parseInt(dimensionParts[0].trim(), 10);
-        const width = parseInt(dimensionParts[1].trim(), 10);
+        const height = Number.parseInt(dimensionParts[0].trim(), 10);
+        const width = Number.parseInt(dimensionParts[1].trim(), 10);
         
-        if (isNaN(height) || isNaN(width) || height <= 0 || width <= 0) {
+        if (Number.isNaN(height) || Number.isNaN(width) || height <= 0 || width <= 0) {
             throw new Error('invalid board dimensions');
         }
 
@@ -151,7 +151,7 @@ export class Board {
         const cardCounts = new Map<string, number>();
         
         // Read all cards from the file (one per line)
-        const allCards = lines.slice(1).map(line => line.trim()).filter(line => line.length > 0);
+        const allCards = lines.slice(1).map((line: string) => line.trim()).filter((line: string) => line.length > 0);
         
         // Validate total number of cards
         const totalCards = height * width;
@@ -296,7 +296,7 @@ export class Board {
             }
             this.playerStates.set(playerId, { hasMatch: false });
         } 
-        return;
+        // return; // Redundant jump removed
     }
 
     /**
@@ -314,9 +314,9 @@ export class Board {
             let status = "down";
             let text = "";
             if (cell.card.length === 0) status = "none";
-            else if (!cell.faceUp) status = "down";
-            else if (cell.controller === playerId) {
-            status = "my";
+            // else if (!cell.faceUp) status = "down"; // Redundant assignment removed
+            else if (cell.controller === playerId && cell.faceUp) {
+                status = "my";
             text = cell.card;
             } else {
             status = "up";

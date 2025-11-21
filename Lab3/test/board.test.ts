@@ -4,6 +4,8 @@ import { Board } from '../src/board.js';
 /**
  * Tests for the Board abstract data type.
  */
+
+
 describe('Board', function() {
     // Testing strategy
     //
