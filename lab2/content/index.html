@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Lab 1 — Simple HTTP Server</title>
+  <style>
+    :root {
+      --cream: #fbf6f0;
+      --peach: #fde3c9;
+      --black: #221d10;
+      --indigo: #550c72;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;background:linear-gradient(135deg,var(--cream), var(--peach) 55%);font-family:Inter,system-ui,Arial;color:var(--black);}
+    header{padding:32px 20px;text-align:center;border-bottom:2px solid rgba(34,29,16,.08)}
+    h1{margin:0;font-size:28px;letter-spacing:.3px;color:var(--indigo)}
+    .wrap{max-width:960px;margin:24px auto;padding:0 20px}
+    .card{background:#ffffffcc;border:1px solid rgba(34,29,16,.12);border-radius:20px;padding:22px;box-shadow:0 10px 25px rgba(34,29,16,.08)}
+    .btn{display:inline-block;padding:10px 14px;border-radius:12px;border:1px solid rgba(34,29,16,.12);color:var(--black);text-decoration:none;margin-right:8px;background:var(--cream)}
+    .btn:hover{border-color:var(--indigo);color:#fff;background:var(--indigo)}
+    .pill{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:var(--peach);border:1px solid rgba(34,29,16,.18);color:var(--black)}
+    ul{margin:12px 0 0 20px}
+    code{background:var(--peach);padding:2px 6px;border-radius:6px;border:1px solid rgba(34,29,16,.18)}
+    footer{opacity:.9;text-align:center;margin:24px 0 40px;color:var(--black);}
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Lab 1 — Simple HTTP Server</h1>
+    <p class="pill">Single-threaded • Static files only • <strong style="color:var(--indigo)">OK</strong></p>
+  </header>
+  <div class="wrap">
+    <div class="card">
+      <h2>How to use</h2>
+      <p>Open <code>/index.html</code>, <code>/books/book1.txt</code>, or the image below.</p>
+      <div style="display:flex;gap:10px;margin:10px 0 8px 0">
+        <a class="btn" href="/index.html">/index.html</a>
+        <a class="btn" href="/books">/books/</a>
+        <a class="btn" href="/image.jpg">/image.jpg</a>
+      </div>
+      <p>For the concurrency demo (Lab 2), visit the root path <code>/</code> on ports 8082 (race) or 8083 (lock).</p>
+    </div>
+  </div>
+  <footer>PR_LAB_WORKS • Lab 1</footer>
+</body>
+</html>

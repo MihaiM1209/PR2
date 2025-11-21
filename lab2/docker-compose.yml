@@ -1,0 +1,29 @@
+version: "3.9"
+services:
+  single:
+    build: .
+    container_name: lab2_single
+    ports:
+      - "8081:8081"
+    command: ["python", "server_single.py"]
+  
+  race:
+    build: .
+    container_name: lab2_race
+    ports:
+      - "8082:8080"
+    command: ["python", "server_threaded.py"]
+  
+  lock:
+    build: .
+    container_name: lab2_lock
+    ports:
+      - "8083:8080"
+    command: ["python", "server_threaded_lock.py"]
+  
+  rate:
+    build: .
+    container_name: lab2_rate
+    ports:
+      - "8084:8084"
+    command: ["python", "server_rate_limited.py"]

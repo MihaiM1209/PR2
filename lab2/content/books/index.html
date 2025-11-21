@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Index of /books/</title>
+  <style>
+  :root{
+    --bg-start:#fff1e6;
+    --bg-end:#fde7d5;
+    --panel:#fff7ed;
+    --panel-border:#f2d3b9;
+    --text:#1f2937;
+    --muted:#6b7280;
+    --accent:#6d28d9; /* purple */
+    --row:#fff;
+    --row-hover:#fff1e6;
+    --shadow: 0 12px 28px rgba(0,0,0,.08);
+    --radius: 16px;
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;
+    font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Inter, Roboto, Helvetica, Arial;
+    color:var(--text);
+    background: radial-gradient(1200px 600px at 20% -10%, #f8e1c2 0%, transparent 60%),
+                radial-gradient(1200px 700px at 120% 10%, #fde1d6 0%, transparent 60%),
+                linear-gradient(180deg, var(--bg-start), var(--bg-end));
+  }
+  a{color:var(--accent);text-decoration:none}
+  a:hover{text-decoration:underline}
+  .wrap{max-width:980px;margin:36px auto;padding:0 18px}
+  header{display:flex;align-items:center;gap:12px;margin-bottom:18px}
+  h1{font-size:28px;color:#5b21b6;margin:0}
+  .badge{
+    display:inline-flex;align-items:center;gap:8px;
+    background:var(--bg-end); border:1px solid var(--panel-border);
+    color:#7c2d12; padding:8px 12px; border-radius:999px; font-weight:600;
+  }
+  .panel{
+    background:var(--panel); border:1px solid var(--panel-border);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:18px 22px;
+  }
+  .muted{color:var(--muted)}
+  ul.list{list-style:none;margin:10px 0 0;padding:0}
+  li.row{
+    display:flex;align-items:center;gap:10px;
+    padding:14px 0;border-top:1px solid #f3dcca
+  }
+  li.row:first-child{border-top:none}
+  li.row:hover{background:var(--row-hover)}
+  .arrow{opacity:.6}
+  code{background:#fff; border:1px solid #ead7c8; padding:2px 6px; border-radius:8px}
+  footer{color:#856f63;font-size:13px;margin-top:14px}
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <header>
+      <h1>Index of /books/</h1>
+      <span class="badge">Subdirectory listing</span>
+    </header>
+
+    <section class="panel">
+      <p class="muted">Click to browse subdirectories.</p>
+      <ul class="list">
+        <li class="row">
+          <span class="arrow">↰</span>
+          <a href="/">Parent directory</a>
+        </li>
+        <li class="row"><a href="/books/crypto/">crypto/</a></li>
+      </ul>
+      <footer>PR_LAB_WORKS • Lab 1</footer>
+    </section>
+  </div>
+</body>
+</html>
