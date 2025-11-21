@@ -3,5 +3,5 @@ services:
     build: .
     image: memory-scramble:latest
     ports:
-      - "8081:8080"
+      - "8080:8080"
     restart: unless-stopped
